@@ -1,6 +1,10 @@
 <?php
 class UsersController extends AppController {
+
     var $components = array('Session', 'Auth');
+
+    // var $domain = "example.com" 
+    
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Auth->allow('add');
@@ -27,10 +31,17 @@ class UsersController extends AppController {
             $duplicateUsername = $this->User->find('count', array(
              'conditions' => array('username' => $username)
              ));
-            (strpos($email,'@lubbleup.com') ? $emailCheck = 1 : $emailCheck = 0);
 
+            /* 
+            Uncommne these lines if you work in an enteprise-level environment
+            so that you limit the users' registration to corporate-only (recommended)
 
-            if ($duplicateUsername == 0 && $emailCheck == 1) {
+            (strpos($email, $domain) ? $emailCheck = 1 : $emailCheck = 0);
+
+            Remember to update the if check that follows with the $emailCheck var to make use of it.
+            */
+
+            if ($duplicateUsername == 0) {
                 $this->User->create();
                 $this->request->data['User']['role'] = "user";
                 if ($this->User->save($this->request->data)) {
