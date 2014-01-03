@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
 `answers` INT(11) NOT NULL,
 `state` INT(11) NOT NULL,
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 CREATE TABLE IF NOT EXISTS `users` (
 `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 PRIMARY KEY (`id`),
 UNIQUE KEY `email` (`email`),
 UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8_unicode_ci AUTO_INCREMENT=1 ;
 ```
 
 In the app/Controller/UsersController.php file, we have a company-inside limitation for users' registration (we require LubbleUp corporate e-mail accounts), which is be default commented out. Though, we recommend to use it so that is suits your needs if you use it in an enterprise-level environment.
