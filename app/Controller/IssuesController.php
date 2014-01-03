@@ -33,7 +33,7 @@ class IssuesController extends AppController {
             $this->set('posts', $this->Issue->findAllByCommentid(0, "*", array("id" => "DESC")));
         } else {
             $this->set('posts', $this->Issue->find('all',
-                                                   array('conditions' => array('Issue.commentid =' => '0',
+                                                   array('conditions' => array('Issue.comment_id =' => '0',
                                                                                'Issue.state =' => $state),
                                                          'order' => array('Issue.id DESC'),
                                                          )
@@ -124,7 +124,7 @@ class IssuesController extends AppController {
             $this->Issue->create();
             $this->Issue->save($form);   
             $this->Issue->create();
-            $this->Issue->set(array('commentid'=>$post_id));
+            $this->Issue->set(array('comment_id'=>$post_id));
             $this->Issue->set("author", $this->Session->read('Auth.User.username'));
             $this->Issue->set("title", "comment");
             if ($this->Issue->save($this->request->data)) {

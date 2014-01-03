@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `issues` (
 `body` text,
 `created` datetime DEFAULT NULL,
 `modified` datetime DEFAULT NULL,
-`commentid` INT(11) NOT NULL,
+`comment_id` INT(11) NOT NULL,
 `author` VARCHAR(255) NOT NULL,
 `answers` INT(11) NOT NULL,
 `state` INT(11) NOT NULL,
