@@ -5,8 +5,8 @@ BugCake is an open source minimalistic bug tracker, developed in the CakePHP fra
 
 ### Pictures
 
-[Picture 1](http://s23.postimg.org/4b3anpeob/demo.png "Picture 1")
-[Picture 2](http://s24.postimg.org/c5813csbp/demo2.png "Picture 2")
+[Picture 1](http://i.imgur.com/euy3DjW.png "Picture 1")
+[Picture 2](http://i.imgur.com/wVW8ViP.png "Picture 2")
 
 
 ### Installation
