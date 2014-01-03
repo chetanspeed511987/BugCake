@@ -33,7 +33,7 @@ class UsersController extends AppController {
              ));
 
             /* 
-            Uncommne these lines if you work in an enteprise-level environment
+            Uncomment these lines if you work in an enteprise-level environment
             so that you limit the users' registration to corporate-only (recommended)
 
             (strpos($email, $domain) ? $emailCheck = 1 : $emailCheck = 0);
@@ -105,5 +105,6 @@ class UsersController extends AppController {
     public function logout() {
         $this->redirect($this->Auth->logout());
     }
+
 }
 ?>

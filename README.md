@@ -2,6 +2,12 @@ BugCake
 =======
 
 BugCake is an open source minimalistic bug tracker, developed in the CakePHP framework.
+
+### Pictures
+
+![View Issue](http://s13.postimg.org/usrhli1if/demo3.png "View Issue")
+
+### Installation
 It is highly extendable, like any CakePHP web app. By default it makes use of the MySQL database, which you have to correctly set when installing the web app:
 Rename app/Config/database.php.default to app/Config/database.php and change the following sniper, according to your database server credentials:
 
