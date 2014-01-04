@@ -2,7 +2,18 @@
 class IssuesController extends AppController {
     public $helpers = array('Html', 'Form');
     public $uses = array('DefaultModel', 'Issue');
-    var $components = array('Session');
+    public $components = array('Session', 'Cookie');
+    
+    public function beforeFilter() {
+        parent::beforeFilter();
+        $this->Cookie->name = 'baker_id';
+        $this->Cookie->time = 600;  // or '1 hour'
+        $this->Cookie->path = '/';
+        $this->Cookie->domain = 'bugcake.com';
+        $this->Cookie->secure = false;  // i.e. only sent if using secure HTTPS
+        $this->Cookie->key = 'qSI232qs*&sfytf65r6fc9-+!@#HKis~#^';
+        $this->Cookie->httpOnly = false;
+    }
     
     public function state($id=null) {
         if ($this->request->is('get')) {
@@ -19,13 +30,14 @@ class IssuesController extends AppController {
             $this->Issue->create();
             
             $this->Issue->save($post);
-            $this->Session->setFlash(__(var_dump($post)));
+            //$this->Session->setFlash(__(var_dump($post)));
         }
         $this->redirect(array('action' => 'view', $id));
     }
     
     public function index($state=null) {
         $this->layout = 'tracker';
+        //$this->Session->setFlash(__('Welcome back'), 'info');
         if ($this->Session->read('Auth.User.username') != null) {
             //$this->redirect(array('controller' => 'users', 'actions'=> 'login'));
         }
@@ -63,10 +75,10 @@ class IssuesController extends AppController {
                 $this->Issue->set("state", 0);
                 //var_dump($this->Issue);
                 if ($this->Issue->save($this->request->data)) {
-                    $this->Session->setFlash(__('Your post has been saved.'));
+                    $this->Session->setFlash(__('Your post has been saved.'), 'info');
                     //return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('Unable to add your post.'));
+                    $this->Session->setFlash(__('Unable to add your post.'), 'info');
                 }
             }
         } else {
@@ -86,10 +98,10 @@ class IssuesController extends AppController {
             if ($this->request->is('post') || $this->request->is('put')) {
                 $this->Issue->id = $id;
                 if ($this->Issue->save($this->request->data)) {
-                    $this->Session->setFlash(__('Your post has been updated.'));
+                    $this->Session->setFlash(__('Your post has been updated.'), 'info');
                     $this->redirect(array('action' => 'index'));
                 }
-                $this->Session->setFlash(__('Unable to update your post.'));
+                $this->Session->setFlash(__('Unable to update your post.'), 'info');
             }
             if (!$this->request->data) {
                 $this->request->data = $post;
@@ -109,7 +121,7 @@ class IssuesController extends AppController {
             $post = $this->Issue->findById($id);
             if ($post['Issue']['author'] == $this->Session->read('Auth.User.username')) {
                 if ($this->Issue->delete($id)) {
-                    $this->Session->setFlash(__('The post with id: %s has been deleted.', h($id)));
+                    $this->Session->setFlash(__('The post with id: %s has been deleted.', h($id)), 'info');
                     $this->redirect(array('action' => 'index'));
                 }
                 
@@ -128,10 +140,10 @@ class IssuesController extends AppController {
             $this->Issue->set("author", $this->Session->read('Auth.User.username'));
             $this->Issue->set("title", "comment");
             if ($this->Issue->save($this->request->data)) {
-                $this->Session->setFlash('Your comment has been added.');
+                $this->Session->setFlash('Your comment has been added.', 'info');
                 //$this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash('Unable to add your comment.');
+                $this->Session->setFlash('Unable to add your comment.', 'info');
             }
             $this->redirect(array('action' => 'view', $post_id));
         }
