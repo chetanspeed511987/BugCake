@@ -30,7 +30,7 @@ class IssuesController extends AppController {
             //$this->redirect(array('controller' => 'users', 'actions'=> 'login'));
         }
         if ($state == null) {
-            $this->set('posts', $this->Issue->findAllByCommentid(0, "*", array("id" => "DESC")));
+            $this->set('posts', $this->Issue->findAllByComment_id(0, "*", array("id" => "DESC")));
         } else {
             $this->set('posts', $this->Issue->find('all',
                                                    array('conditions' => array('Issue.comment_id =' => '0',
@@ -46,7 +46,7 @@ class IssuesController extends AppController {
         $this->layout = 'tracker';
 
         $post = $this->Issue->findById($id);
-        $comments = $this->Issue->findAllByCommentid($id);
+        $comments = $this->Issue->findAllByComment_id($id);
         
         if (!$post) { $this->redirect(array('action' => 'index')); }
         
