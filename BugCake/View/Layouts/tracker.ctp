@@ -9,6 +9,9 @@
       .bgj {
           background: url('/img/bg.jpg') repeat scroll 0 0 #FCFCFC;
       }
+      a {
+          text-decoration: none;  
+      }
   </style>
   
   <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
