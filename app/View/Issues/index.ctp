@@ -1,7 +1,9 @@
-
-    
-    
 <div class="main container">
+    <div class="three fluid ui buttons">
+        <?php echo $this->Paginator->prev('<i class="double angle left icon"></i>',array('tag' => 'div', 'escape' => false, 'class' => 'ui active button'));?>
+        <?php echo '<div class="ui active button">'.$this->Paginator->counter().'</div>'; ?>
+        <?php echo $this->Paginator->next('<i class="double angle right icon"></i>',array('tag' => 'div', 'escape' => false, 'class' => 'ui active button'));?>
+    </div>
     <table class="ui table segment">
       <thead>
         <tr>
@@ -28,4 +30,9 @@
             <?php endforeach; ?>
       </tbody>
     </table>
+    <div class="three fluid ui buttons">
+        <?php echo $this->Paginator->prev('<i class="double angle left icon"></i>',array('tag' => 'div', 'escape' => false, 'class' => 'ui active button'));?>
+        <?php echo '<div class="ui active button">'.$this->Paginator->counter().'</div>'; ?>
+        <?php echo $this->Paginator->next('<i class="double angle right icon"></i>',array('tag' => 'div', 'escape' => false, 'class' => 'ui active button'));?>
+    </div>
 </div>

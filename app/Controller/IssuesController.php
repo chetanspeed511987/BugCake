@@ -2,8 +2,8 @@
 class IssuesController extends AppController {
     public $helpers = array('Html', 'Form');
     public $uses = array('DefaultModel', 'Issue');
-    public $components = array('Session', 'Cookie');
-    
+    public $components = array('Paginator', 'Session', 'Cookie');
+
     public function beforeFilter() {
         parent::beforeFilter();
         $this->Cookie->name = 'baker_id';
@@ -42,15 +42,16 @@ class IssuesController extends AppController {
             //$this->redirect(array('controller' => 'users', 'actions'=> 'login'));
         }
         if ($state == null) {
-            $this->set('posts', $this->Issue->findAllByComment_id(0, "*", array("id" => "DESC")));
+            $this->Paginator->settings = array('conditions' => array('Issue.comment_id =' => '0'),
+                                               'limit' => 6, 'order' => array('Issue.id' => 'desc'));
         } else {
-            $this->set('posts', $this->Issue->find('all',
-                                                   array('conditions' => array('Issue.comment_id =' => '0',
-                                                                               'Issue.state =' => $state),
-                                                         'order' => array('Issue.id DESC'),
-                                                         )
-                                                   ));
+            $this->Paginator->settings = array('conditions' => array('Issue.comment_id =' => '0',
+                                                                     'Issue.state =' => $state),
+                                               'limit' => 6, 'order' => array('Issue.id' => 'desc'));
         }
+
+        $data = $this->Paginator->paginate('Issue');
+        $this->set('posts', $data);
     }
 
     public function view($id=null) {
