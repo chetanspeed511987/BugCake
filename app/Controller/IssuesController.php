@@ -1,7 +1,6 @@
 <?php
 class IssuesController extends AppController {
     public $helpers = array('Html', 'Form');
-    public $uses = array('DefaultModel', 'Issue');
     public $components = array('Paginator', 'Session', 'Cookie');
 
     public function beforeFilter() {
@@ -13,6 +12,24 @@ class IssuesController extends AppController {
         $this->Cookie->secure = false;  // i.e. only sent if using secure HTTPS
         $this->Cookie->key = 'qSI232qs*&sfytf65r6fc9-+!@#HKis~#^';
         $this->Cookie->httpOnly = false;
+    }
+
+    public function search() {
+        $this->layout = 'tracker';
+        if ($this->Session->read('Auth.User.username') != null || $this->Cookie->read('User.username') != null) {
+            if ($this->request->is('post')) {
+                $keywords = $this->request['data']['Issue']['search'];
+                $options = array(
+                'conditions' => array(
+                    'OR' => array(
+                        'Issue.body LIKE' => '%'. $keywords . '%',
+                        'Issue.title LIKE' => '%'. $keywords . '%'
+                        )
+                    )
+                );
+                $this->set('posts', $this->Issue->find('all', $options));
+            }
+        } 
     }
     
     public function state($id=null) {
