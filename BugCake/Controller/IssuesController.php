@@ -19,7 +19,7 @@ class IssuesController extends BugCakeAppController {
         if ($this->request->is('get')) {
             $this->redirect(array('action' => 'view', $id));
         }
-        if ($this->Session->read('Auth.User.role') == 'admin') {
+        if ($this->Session->read('Auth.User.role') == 'admin' || $this->Cookie->read('User.role') == 'admin') {
             
             $post = $this->Issue->findById($id);
             if ($post['Issue']['state'] == 0) {
@@ -38,7 +38,7 @@ class IssuesController extends BugCakeAppController {
     public function index($state=null) {
         $this->layout = 'tracker';
         //$this->Session->setFlash(__('Welcome back'), 'info');
-        if ($this->Session->read('Auth.User.username') != null) {
+        if ($this->Session->read('Auth.User.username') != null || $this->Cookie->read('User.username') != null) {
             //$this->redirect(array('controller' => 'users', 'actions'=> 'login'));
         }
         if ($state == null) {
@@ -68,10 +68,10 @@ class IssuesController extends BugCakeAppController {
     
     public function add() {
         $this->layout = 'tracker';
-        if ($this->Session->read('Auth.User.username') != null) {
+        if ($this->Session->read('Auth.User.username') != null || $this->Cookie->read('User.username') != null) {
             if ($this->request->is('post')) {
                 $this->Issue->create();
-                $this->Issue->set("author", $this->Session->read('Auth.User.username'));
+                $this->Issue->set("author", $this->Cookie->read('User.username'));
                 $this->Issue->set("state", 0);
                 //var_dump($this->Issue);
                 if ($this->Issue->save($this->request->data)) {
@@ -89,8 +89,9 @@ class IssuesController extends BugCakeAppController {
     public function edit($id = null) {
         $this->layout = 'tracker';
         $post = $this->Issue->findById($id);
-        if ($post['Issue']['author'] == $this->Session->read('Auth.User.username')) {
-            
+        if ($post['Issue']['author'] == $this->Session->read('Auth.User.username') ||
+            $post['Issue']['author'] == $this->Cookie->read('User.username')) {
+
             $this->set('post', $post);
             if (!$post) {
                 $this->redirect(array('action' => 'index'));
@@ -114,19 +115,20 @@ class IssuesController extends BugCakeAppController {
     
     public function delete($id) {
         $this->layout = 'tracker';
-        if ($this->Session->read('Auth.User.username') != null) {
-            if ($this->request->is('get')) {
+        
+        if ($this->request->is('get')) {
+            $this->redirect(array('action' => 'index'));
+        }
+        $post = $this->Issue->findById($id);
+        if ($post['Issue']['author'] == $this->Session->read('Auth.User.username') ||
+            $post['Issue']['author'] == $this->Cookie->read('User.username')) {
+            if ($this->Issue->delete($id)) {
+                $this->Session->setFlash(__('The post with id: %s has been deleted.', h($id)), 'info');
                 $this->redirect(array('action' => 'index'));
             }
-            $post = $this->Issue->findById($id);
-            if ($post['Issue']['author'] == $this->Session->read('Auth.User.username')) {
-                if ($this->Issue->delete($id)) {
-                    $this->Session->setFlash(__('The post with id: %s has been deleted.', h($id)), 'info');
-                    $this->redirect(array('action' => 'index'));
-                }
-                
-            }
+            
         }
+        
     }
     
     public function comment($post_id = null) {
@@ -137,7 +139,7 @@ class IssuesController extends BugCakeAppController {
             $this->Issue->save($form);   
             $this->Issue->create();
             $this->Issue->set(array('comment_id'=>$post_id));
-            $this->Issue->set("author", $this->Session->read('Auth.User.username'));
+            $this->Issue->set("author", $this->Cookie->read('User.username'));
             $this->Issue->set("title", "comment");
             if ($this->Issue->save($this->request->data)) {
                 $this->Session->setFlash('Your comment has been added.', 'info');
