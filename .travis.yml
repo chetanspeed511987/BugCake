@@ -24,6 +24,6 @@ before_script:
    }" > ../cakephp/app/Config/database.php
  
 script:
-  - ./lib/Cake/Console/cake test AssetCompress AllTests --stderr
+  - ./../lib/Cake/Console/cake test AssetCompress AllTests --stderr
 notifications:
   email: false
