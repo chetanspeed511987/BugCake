@@ -1,13 +1,19 @@
-BugCake
+BugCake Plugin for CakePHP
 =======
 
 BugCake is an open source minimalistic bug tracker, developed in the CakePHP framework.
+This is the plugin of the master branch. 
 
 ### Pictures
 
-[![Build Status](https://travis-ci.org/lubbleup/BugCake.png?branch=master)](https://travis-ci.org/lubbleup/BugCake)
+[![Build Status](https://travis-ci.org/lubbleup/BugCake.png?branch=plugin)](https://travis-ci.org/lubbleup/BugCake)
 ![Picture 1](http://i.imgur.com/euy3DjW.png)
 ![Picture 2](http://i.imgur.com/wVW8ViP.png)
+
+###Instructions
+Do not forget to load the plugin in your bootstrap.php file.
+Then, access the plugin controllers as in the example:
+http://host/bug_cake/issues
 
 
 ### Installation
