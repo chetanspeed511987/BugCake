@@ -1,6 +1,6 @@
 <?php
 
-class ContactManagerAppController extends AppController {
+class BugCakeAppController extends AppController {
 }
 
 ?>

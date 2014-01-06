@@ -7,7 +7,7 @@
   </title>
   <style>
       .bgj {
-          background: url('/img/bg.jpg') repeat scroll 0 0 #FCFCFC;
+          background: url('/bug_cake/img/bg.jpg') repeat scroll 0 0 #FCFCFC;
       }
       a {
           text-decoration: none;  
@@ -16,9 +16,9 @@
   
   <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
   <?php
-  echo $this->Html->css('semantic');
+  echo $this->Html->css('bug_cake/semantic');
   echo $this->fetch('css');
-  echo $this->Html->script('semantic');
+  echo $this->Html->script('bug_cake/semantic');
   echo $this->fetch('script')
   ?>
   <!-- Site Properities -->
