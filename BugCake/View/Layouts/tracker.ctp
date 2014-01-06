@@ -16,12 +16,9 @@
   
   <script src="http://code.jquery.com/jquery-2.0.3.js"></script>
   <?php
-  echo $this->Html->css('bug_cake/semantic');
-  echo $this->fetch('css');
-  echo $this->Html->script('bug_cake/semantic');
-  echo $this->fetch('script')
+  echo $this->Html->css('/bug_cake/css/semantic');
+  echo $this->Html->script('/bug_cake/js/semantic');
   ?>
-  <!-- Site Properities -->
   
 </head>
 <body class="index bgj">
