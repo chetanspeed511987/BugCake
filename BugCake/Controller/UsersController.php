@@ -6,7 +6,7 @@ class UsersController extends BugCakeAppController {
     var $components = array('Session', 'Auth', 'Cookie');
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('add');
+        $this->Auth->allow('add', 'login', 'index', 'logout');
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 600;  // or '1 hour'
         $this->Cookie->path = '/';
@@ -17,18 +17,8 @@ class UsersController extends BugCakeAppController {
     }
     
     public function index() {
-        $this->User->recursive = 0;
-        $this->set('users', $this->paginate());
-        $this->redirect(array('action' => '../'));
     }
 
-    public function view($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        $this->set('user', $this->User->read(null, $id));
-    }
 
     public function add() {
         if ($this->request->is('post')) {
@@ -38,15 +28,15 @@ class UsersController extends BugCakeAppController {
              'conditions' => array('username' => $username)
              ));
             /* 
--            Uncomment these lines if you work in an enteprise-level environment
--            so that you limit the users' registration to corporate-only (recommended)
--
--            (strpos($email, $domain) ? $emailCheck = 1 : $emailCheck = 0);
+             Uncomment these lines if you work in an enteprise-level environment
+             so that you limit the users' registration to corporate-only (recommended)
  
--            Remember to update the if check that follows with the $emailCheck var to make use of it.
--            */
--
--           if ($duplicateUsername == 0) {
+             (strpos($email, $domain) ? $emailCheck = 1 : $emailCheck = 0);
+ 
+             Remember to update the if check that follows with the $emailCheck var to make use of it.
+             */
+
+            if ($duplicateUsername == 0) {
 
                 $this->User->create();
                 $this->request->data['User']['role'] = "user";
@@ -66,39 +56,7 @@ class UsersController extends BugCakeAppController {
         }
     }
 
-    public function edit($id = null) {
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->User->save($this->request->data)) {
-                $this->Session->setFlash(__('The user has been saved'));
-                return $this->redirect(array('action' => 'index'));
-            }
-            $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
-        } else {
-            $this->request->data = $this->User->read(null, $id);
-            unset($this->request->data['User']['password']);
-        }
-    }
 
-    public function delete($id = null) {
-        if (!$this->request->is('post')) {
-            throw new MethodNotAllowedException();
-        }
-        $this->User->id = $id;
-        if (!$this->User->exists()) {
-            throw new NotFoundException(__('Invalid user'));
-        }
-        if ($this->User->delete()) {
-            $this->Session->setFlash(__('User deleted'));
-            return $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('User was not deleted'));
-        $this->redirect(array('action' => 'index'));
-    }
-    
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
@@ -111,9 +69,7 @@ class UsersController extends BugCakeAppController {
         }
     }
     
-    public function test() {
-    }
-    
+
     public function logout() {
         $this->Cookie->destroy();
         $this->Session->setFlash(__('Logged out successfully'));
