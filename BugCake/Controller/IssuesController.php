@@ -15,6 +15,24 @@ class IssuesController extends BugCakeAppController {
         $this->Cookie->httpOnly = false;
     }
     
+    public function search() {
+        $this->layout = 'tracker';
+        if ($this->Session->read('Auth.User.username') != null || $this->Cookie->read('User.username') != null) {
+            if ($this->request->is('post')) {
+                $keywords = $this->request['data']['Issue']['search'];
+                $options = array(
+                'conditions' => array(
+                    'OR' => array(
+                        'Issue.body LIKE' => '%'. $keywords . '%',
+                        'Issue.title LIKE' => '%'. $keywords . '%'
+                        )
+                    )
+                );
+                $this->set('posts', $this->Issue->find('all', $options));
+            }
+        } 
+    }
+    
     public function state($id=null) {
         if ($this->request->is('get')) {
             $this->redirect(array('action' => 'view', $id));
