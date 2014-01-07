@@ -32,6 +32,7 @@
         <?php echo $this->Html->link('<i class="bug icon"></i> All', array('action' => 'index'), array('class' => 'active purple item', 'escape' => false)); ?>
         <?php echo $this->Html->link('<i class="empty checkbox icon"></i> Open', array('action' => 'index', 0), array('class' => 'active red item', 'escape' => false)); ?>
         <?php echo $this->Html->link('<i class="checked checkbox icon"></i> Close', array('action' => 'index', 1), array('class' => 'active blue item', 'escape' => false)); ?>
+        <?php echo $this->Html->link('<i class="search icon"></i> Search', array('action' => 'search'), array('class' => 'active teal item', 'escape' => false)); ?>
 
       </div>
 
